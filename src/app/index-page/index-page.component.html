@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col vh-100  div_edit   " id=divId>
+      <div class=" align-self-center div1_edit  fade-in-image" id="hidden1">
+        <img src="assets\img\pngegg.png" class=" hero-img " alt="Cinque Terre">
+
+
+      </div>
+      <div class=" mt-5 div2_edit text-center" id="hidding">
+        <button type="button" class="start-game-btn  " data-bs-toggle="modal" data-bs-target="#exampleModal1  "
+          click="selectXorO()">Single Player </button>
+        <button type="button" class="start-game-btn w-15 " data-bs-toggle="modal"
+          data-bs-target="#exampleModal">Multiplayer </button>
+        <!-- <a routerLink="/GamePage" routerLinkActive="active"> hhhh</a> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--model of mutipalayer setup-->
+<div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  ">
+    <div class="modal-content transbox">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Player Names</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+
+          <img src="assets\img\imageX.png" class="imge-edit">
+
+          <input type="text" name="playerX" class="input-edit " [(ngModel)]="playerXName " id="playerXId">
+          <span class="floating-label  "> Name</span>
+        </div>
+        <div class="mb-3">
+
+          <img src="assets\img\imageO.png" class="imge-edit">
+
+          <input type="text" class="input-edit " name="playerO" [(ngModel)]="playerOName" id="playerOId">
+          <span class="floating-label1"> Name</span>
+        </div>
+
+        <div class="mb-3">
+
+          <div class="sm-12 mb-3" id="avaXId">
+            <img src="assets\img\imageX.png" class="imge-edit">
+
+            <img src="assets\img\avatar1.png" class="avatarx-edit" id="avatar1"[ngClass]="{'avaXSelected': selectXAvatar==='avatar1'}" (click)="selectXAvatar='avatar1';">
+            <img src="assets\img\avatar2.png" class="avatarx-edit" id="avatar2" [ngClass]="{'avaXSelected': selectXAvatar==='avatar2'}" (click)="selectXAvatar='avatar2';">
+
+
+
+          </div>
+
+          <div class="sm-12">
+            <img src="assets\img\imageO.png" class="imge-edit">
+
+            <img src="assets\img\avatar3.png" class="avataro-edit" id="avatar3" [ngClass]="{'avaOSelected': selectOAvatar==='avatar3'}" (click)="selectOAvatar='avatar3';">
+            <img src="assets\img\avatar4.png" class="avataro-edit" id="avatar4"[ngClass]="{'avaOSelected': selectOAvatar==='avatar4'}" (click)="selectOAvatar='avatar4';">
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-footer">
+
+        <button type="submit" class="text-center   dismiss-btn" data-bs-dismiss="modal"
+          (click)="saveData();sendplayerData();">Start Game</button>
+      </div>
+
+    </div>
+  </div>
+  <div id="snackbar">Please Enter Players Name..</div>
+</div>
