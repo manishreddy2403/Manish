@@ -36,7 +36,7 @@ export class GamePageComponent implements OnInit {
     ['2', '4', '6']
   ];
   strikeClass = ["strike-row-1", "strike-row-2", "strike-row-3", "strike-col-1", "strike-col-2", "strike-col-3", "strike-dal-1", "strike-dal-2"];
-  flag = 1;
+  flag = true;
 
 
 
@@ -45,68 +45,60 @@ export class GamePageComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+
     let data = this.shared.getData();
     this.playerXName = data[0]
     this.playerOName = data[1]
-    this.selectOAvatar=data[3];
-    this.selectXAvatar=data[2]
-
+    this.selectOAvatar = data[3];
+    this.selectXAvatar = data[2]
     this.playerName = this.playerXName;
     this.turnImage = this.imageX;
 
   }
 
   toClick(event: Event) {
-    const b = (event.target as HTMLDivElement).id;
+    const divID = (event.target as HTMLDivElement).id;
 
-    if (this.flag == 1 && (document.getElementById(b) as HTMLDivElement).innerHTML == "") {
+    if (this.flag == true && (document.getElementById(divID) as HTMLDivElement).innerHTML == "") {
       this.playerName = this.playerOName;
       this.turnImage = this.imageO;
-      (document.getElementById(b) as HTMLDivElement).innerHTML = "<img src='assets/img/imageX.png' width='80px' height='80px'>"
-      this.flag = 0;
-      this.xWin[b] = 1;
-      this.draw += 1;
-      this.check();
+      (document.getElementById(divID) as HTMLDivElement).innerHTML = "<img src='assets/img/imageX.png' width='80px' height='80px'>"
+      this.xWin[divID] = 1;
+      this.toget(this.flag)
+
 
     }
-    else if (this.flag == 0 && document.getElementById(b)?.innerHTML == "") {
+    else if (this.flag == false && document.getElementById(divID)?.innerHTML == "") {
       this.playerName = this.playerXName;
       this.turnImage = this.imageX;
-      (document.getElementById(b) as HTMLDivElement).innerHTML = "<img src='assets/img/imageO.png' width='80px' height='80px'>";
-      this.flag = 1;
-      this.oWin[b] = 1;
-      this.draw += 1;
-      this.check();
+      (document.getElementById(divID) as HTMLDivElement).innerHTML = "<img src='assets/img/imageO.png' width='80px' height='80px'>";
+      this.oWin[divID] = 1;
+      this.toget(this.flag)
+
     }
 
   }
   check() {
-
     for (var i = 0; i < this.winningCombination.length; i++) {
+
       if (this.xWin[this.winningCombination[i][0]] > -1 && this.xWin[this.winningCombination[i][1]] > -1 && this.xWin[this.winningCombination[i][2]]) {
         this.toGetStrike(i);
-        (document.getElementById("titleWinner") as HTMLHeadingElement).innerHTML = this.playerXName + " " + "<span style=\"color:black\">" + "<br> You won the match";
-        (document.getElementById("win-img-edit1") as HTMLDivElement).innerHTML = `<img src="assets/img/winningImage.gif" class="win-img-edit" alt="hgfhg" style="width:300px"> "`;
-        setTimeout(this.openModal, 1000);
+        this.playerName = this.playerXName
+        this.openModal()
         this.playerXScore += 1;
 
         break;
       }
       if (this.oWin[this.winningCombination[i][0]] > -1 && this.oWin[this.winningCombination[i][1]] > -1 && this.oWin[this.winningCombination[i][2]]) {
         this.toGetStrike(i);
-        (document.getElementById("titleWinner") as HTMLHeadingElement).innerHTML = this.playerOName + " " + "<span style=\"color:black\">" + "<br> You won the match";
-        (document.getElementById("win-img-edit1") as HTMLDivElement).innerHTML = `<img src="assets/img/winningImage.gif" class="win-img-edit" alt="hgfhg" style="width:300px">`;
-        setTimeout(this.openModal, 1000);
+        this.playerName = this.playerOName
+        this.openModal()
         this.playerOScore += 1;
 
         break;
       }
       if (this.draw == 9) {
-        (document.getElementById("titleWinner") as HTMLHeadingElement).innerHTML = "It's Draw Match";
-        (document.getElementById("win-img-edit1") as HTMLDivElement).innerHTML = `<img src="assets/img/draw.gif" class="win-img-edit" alt="hgfhg" style="width:300px">`;
-        let wait = setTimeout(this.openModal, 1000);
-
+        this.openModal()
       }
     }
 
@@ -114,12 +106,20 @@ export class GamePageComponent implements OnInit {
 
 
   openModal() {
-    (document.getElementById("myModal") as HTMLDialogElement).showModal();
+    setTimeout(() => {
+      (document.getElementById("myModal") as HTMLDialogElement).showModal();
+    }, 1000);
   }
 
   toGetStrike(i: number) {
     this.id = this.strikeClass[i];
     this.win = true;
+
+  }
+  toget(flag: any,) {
+    this.flag = !flag;
+    this.draw += 1;
+    this.check();
 
   }
 
@@ -131,7 +131,7 @@ export class GamePageComponent implements OnInit {
     this.xWin = [];
     this.oWin = [];
     this.draw = 0;
-    this.flag = 1;
+    this.flag = true;
     this.win = false
     this.playerName = this.playerXName;
     this.turnImage = this.imageX;

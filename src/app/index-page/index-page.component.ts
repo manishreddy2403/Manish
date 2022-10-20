@@ -1,3 +1,4 @@
+import { STRING_TYPE } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedService } from '../shared/shared.service';
@@ -7,31 +8,41 @@ import { SharedService } from '../shared/shared.service';
   styleUrls: ['./index-page.component.css']
 })
 export class IndexPageComponent implements OnInit {
-  [x: string]: any;
+  // [x: string]: any;
+  arr: number[][] = [[], []]
+  avatarClass = '';
+  selectXAvatar = '';
+  selectOAvatar = '';
+  // names=[" "," "];
+  // playerXName="";
+  // playerOName="";
+  // images=["assets\img\imageX.png",]
 
-  selectXAvatar = " ";
-  selectOAvatar = " ";
-  playerXName = " ";
-  playerOName = " ";
+  names = [{ image: "assets/img/imageX.png", name: "playerX", value: "" },
+  { image: "assets/img/imageO.png", name: "playerO", value: "" }
+  ];
 
 
+  select(event: Event, row: number, col: number) {
+    this.avatarClass = 'avaXSelected';
+
+    const id = (event.target as HTMLDivElement).id;
+
+  }
   constructor(private router: Router, private shared: SharedService) { }
 
   ngOnInit(): void {
 
+
   }
-
   sendplayerData() {
-    this.shared.setData(this.playerXName,this.playerOName,this.selectXAvatar, this.selectOAvatar);
- 
-
+    this.shared.setData(this.names[0].value, this.names[1].value, this.selectXAvatar, this.selectOAvatar);
   }
   goToPage() {
-
     this.router.navigate([`/GamePage`]);
   }
   saveData() {
-    if (this.playerXName !== " " && this.playerOName !== " ") {
+    if (this.names[1].value !== " " && this.names[0].value !== " ") {
       this.goToPage()
     } else {
       alert("Enter values")

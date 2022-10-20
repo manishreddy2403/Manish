@@ -478,3 +478,7 @@ font-size: 25px;
            50% {right:400px;}
            
        }
+       #titleWinner{
+        font-size: 50px;
+        font-weight: 400;
+       }
